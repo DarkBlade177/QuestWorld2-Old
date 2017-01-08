@@ -44,10 +44,11 @@ public class QuestMission extends QWObject {
 	String lore;
 	int citizen;
 	boolean spawners;
+	String command;
 	
 	List<String> dialogue = new ArrayList<String>();
 	
-	public QuestMission(Quest quest, String id, MissionType type, EntityType entity, String name, ItemStack item, Location location, int amount, String displayName, long timeframe, boolean deathReset, int citizen, boolean spawners, String lore) {
+	public QuestMission(Quest quest, String id, MissionType type, EntityType entity, String name, ItemStack item, Location location, int amount, String displayName, long timeframe, boolean deathReset, int citizen, boolean spawners, String lore, String command) {
 		this.quest = quest;
 		this.id = id;
 		this.type = type;
@@ -62,6 +63,7 @@ public class QuestMission extends QWObject {
 		this.deathReset = deathReset;
 		this.lore = lore == null ? "": lore;
 		this.spawners = spawners;
+		this.command = command;
 
 		File file = new File("plugins/QuestWorld/dialogues/" + quest.getCategory().getID() + "+" + quest.getID() + "+" + getID() + ".txt");
 		if (file.exists()) {
@@ -94,7 +96,7 @@ public class QuestMission extends QWObject {
 	
 	public String getText() {
 		if (getCustomName() != null) return getCustomName();
-		return ChatColor.GRAY + type.getFormat(entity, item, location, amount, ChatColor.translateAlternateColorCodes('&', name), citizen, spawners) + (hasTimeframe() ? (" &7within " + (getTimeframe() / 60) + "h " + (getTimeframe() % 60) + "m"): "") + (resetsonDeath() ? " &7without dying": "");
+		return ChatColor.GRAY + type.getFormat(entity, item, location, amount, ChatColor.translateAlternateColorCodes('&', name), citizen, spawners, command) + (hasTimeframe() ? (" &7within " + (getTimeframe() / 60) + "h " + (getTimeframe() % 60) + "m"): "") + (resetsonDeath() ? " &7without dying": "");
 	}
 	
 	public ItemStack getRawItem() {
@@ -163,8 +165,9 @@ public class QuestMission extends QWObject {
 		int amount = QuestWorld.getInstance().getManager(p).getProgress(this);
 		int total = this.amount;
 		
-		// Location is a one-time thing, we don't want to display "(1/6)" or something silly
-		if(getType().getSubmissionType() == SubmissionType.LOCATION) {
+		// Location and commands are a one-time thing, we don't want to display "(1/6)" or something silly
+		if(getType().getSubmissionType() == SubmissionType.LOCATION
+				|| getType().getSubmissionType() == SubmissionType.COMMAND) {
 			total = 1;
 		}
 		
@@ -328,4 +331,11 @@ public class QuestMission extends QWObject {
 		this.spawners = acceptsSpawners;
 	}
 
+	public String getCommand() {
+		return command;
+	}
+
+	public void setCommand(String command) {
+		this.command = command;
+	}
 }

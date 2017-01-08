@@ -117,7 +117,8 @@ public class Quest extends QWObject {
 						cfg.getBoolean("missions." + key + ".reset-on-death"),
 						cfg.getInt("missions." + key + ".citizen"),
 						cfg.getBoolean("missions." + key + ".exclude-spawners"),
-						Text.colorize(cfg.getString("missions." + key + ".lore"))));
+						Text.colorize(cfg.getString("missions." + key + ".lore")),
+						cfg.getString("missions." + key + ".command")));
 			}
 			else missions.add(new QuestMission(this, key,
 					MissionType.valueOf(cfg.getString("missions." + key + ".type")),
@@ -131,7 +132,8 @@ public class Quest extends QWObject {
 					cfg.getBoolean("missions." + key + ".reset-on-death"),
 					cfg.getInt("missions." + key + ".citizen"),
 					cfg.getBoolean("missions." + key + ".exclude-spawners"),
-					Text.colorize(cfg.getString("missions." + key + ".lore"))));
+					Text.colorize(cfg.getString("missions." + key + ".lore")),
+					cfg.getString("missions." + key + ".command")));
 			
 		}
 		return missions;
@@ -176,6 +178,7 @@ public class Quest extends QWObject {
 			cfg.setValue("missions." + mission.getID() + ".lore", Text.escape(mission.getLore()));
 			cfg.setValue("missions." + mission.getID() + ".citizen", mission.getCitizenID());
 			cfg.setValue("missions." + mission.getID() + ".exclude-spawners", mission.acceptsSpawners());
+			cfg.setValue("missions." + mission.getID() + ".command", mission.getCommand());
 		}
 		if (parent != null) cfg.setValue("parent", String.valueOf(parent.getCategory().getID() + "-C" + parent.getID()));
 		else cfg.setValue("parent", null);

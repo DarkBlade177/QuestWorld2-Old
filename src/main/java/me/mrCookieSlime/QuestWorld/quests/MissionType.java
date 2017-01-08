@@ -26,7 +26,8 @@ public class MissionType {
 		TIME,
 		CITIZENS_INTERACT,
 		CITIZENS_KILL, 
-		BLOCK;
+		BLOCK,
+		COMMAND;
 		
 	}
 	
@@ -45,7 +46,7 @@ public class MissionType {
 		this.ticking = ticking;
 	}
 	
-	public String getFormat(EntityType entity, ItemStack item, Location location, int amount, String name, int citizenID, boolean spawners) {
+	public String getFormat(EntityType entity, ItemStack item, Location location, int amount, String name, int citizenID, boolean spawners, String command) {
 		name = Text.colorize(name);
 		switch (type) {
 		case ENTITY: {
@@ -77,6 +78,9 @@ public class MissionType {
 		}
 		case LOCATION: {
 			return String.format(format, name.equals("") ? ("X: " + location.getBlockX() + " Y: " + location.getBlockY() + " Z: " + location.getBlockZ() + ChatColor.GRAY): (ChatColor.RESET + name));
+		}
+		case COMMAND: {
+			return String.format(format, command);
 		}
 		default:
 			return String.format(format, name);

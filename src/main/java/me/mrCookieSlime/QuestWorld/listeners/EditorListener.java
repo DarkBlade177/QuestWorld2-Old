@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class EditorListener implements Listener {
 
@@ -158,5 +159,12 @@ public class EditorListener implements Listener {
 			break;
 		}
 	}
-	
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onCommandPreprocess(PlayerCommandPreprocessEvent e) {
+		if (QuestWorld.getInstance().hasChatCallback(e.getPlayer())) {
+			QuestWorld.getInstance().runChatCallback(e.getPlayer(), e.getMessage());
+			e.setCancelled(true);
+		}
+	}
 }

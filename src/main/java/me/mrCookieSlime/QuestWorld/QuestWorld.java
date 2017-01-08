@@ -22,11 +22,7 @@ import me.mrCookieSlime.QuestWorld.hooks.ASkyBlockListener;
 import me.mrCookieSlime.QuestWorld.hooks.ChatReactionListener;
 import me.mrCookieSlime.QuestWorld.hooks.CitizensListener;
 import me.mrCookieSlime.QuestWorld.hooks.VoteListener;
-import me.mrCookieSlime.QuestWorld.listeners.EditorListener;
-import me.mrCookieSlime.QuestWorld.listeners.Input;
-import me.mrCookieSlime.QuestWorld.listeners.InputType;
-import me.mrCookieSlime.QuestWorld.listeners.PlayerListener;
-import me.mrCookieSlime.QuestWorld.listeners.TaskListener;
+import me.mrCookieSlime.QuestWorld.listeners.*;
 import me.mrCookieSlime.QuestWorld.quests.Category;
 import me.mrCookieSlime.QuestWorld.quests.MissionType;
 import me.mrCookieSlime.QuestWorld.quests.MissionType.SubmissionType;
@@ -68,6 +64,7 @@ public class QuestWorld extends JavaPlugin implements Listener {
 	Set<QuestManager> managers;
 	Map<UUID, QuestManager> profiles;
 	Map<UUID, Input> inputs;
+	Map<UUID, ChatInputCallback> chatInput;
 	
 	Localization local;
 	Economy economy;
@@ -82,6 +79,7 @@ public class QuestWorld extends JavaPlugin implements Listener {
 		managers = new HashSet<QuestManager>();
 		profiles = new HashMap<UUID, QuestManager>();
 		inputs = new HashMap<UUID, Input>();
+		chatInput = new HashMap<UUID, ChatInputCallback>();
 		instance = this;
 		
 		guide = new ItemBuilder(Material.ENCHANTED_BOOK)
@@ -112,6 +110,7 @@ public class QuestWorld extends JavaPlugin implements Listener {
 		registerMissionType(new PlayMission());
 		registerMissionType(new MineMission());
 		registerMissionType(new LevelMission());
+		registerMissionType(new CommandMission());
 		
 		if (getServer().getPluginManager().isPluginEnabled("Votifier")) {
 			registerMissionType(new MissionType("VOTIFIER_VOTE", true, false, false, SubmissionType.INTEGER, "Vote %s times", new MaterialData(Material.DIAMOND)));
@@ -484,5 +483,23 @@ public class QuestWorld extends JavaPlugin implements Listener {
 	
 	public static Sounds getSounds() {
 		return instance.eventSounds;
+	}
+
+	public void addChatCallback(Player p, ChatInputCallback callback) {
+		if (hasChatCallback(p)) {
+			throw new RuntimeException(String.format("Tried to add a pending callback when one already exists for player: %s", p.getName()));
+		}
+		chatInput.put(p.getUniqueId(), callback);
+	}
+
+	public boolean hasChatCallback(Player p) {
+		return chatInput.containsKey(p.getUniqueId());
+	}
+
+	public void runChatCallback(Player p, String result) {
+		ChatInputCallback callback = chatInput.remove(p.getUniqueId());
+		if (callback != null) {
+			callback.run(result);
+		}
 	}
 }

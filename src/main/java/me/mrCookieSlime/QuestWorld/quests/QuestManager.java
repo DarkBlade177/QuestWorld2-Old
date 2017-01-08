@@ -197,7 +197,8 @@ public class QuestManager {
 	}
 	
 	public int getTotal(QuestMission task) {
-		if(task.getType().getSubmissionType() == SubmissionType.LOCATION)
+		if(task.getType().getSubmissionType() == SubmissionType.LOCATION
+				|| task.getType().getSubmissionType() == SubmissionType.COMMAND)
 			return 1;
 		
 		return task.getAmount();

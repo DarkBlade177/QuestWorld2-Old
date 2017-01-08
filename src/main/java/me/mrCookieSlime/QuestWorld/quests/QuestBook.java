@@ -1,36 +1,30 @@
 package me.mrCookieSlime.QuestWorld.quests;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu.MenuClickHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu.MenuOpeningHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.MenuHelper;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.MenuHelper.ChatHandler;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Player.PlayerInventory;
 import me.mrCookieSlime.QuestWorld.QuestWorld;
 import me.mrCookieSlime.QuestWorld.hooks.CitizensListener;
 import me.mrCookieSlime.QuestWorld.listeners.Input;
 import me.mrCookieSlime.QuestWorld.listeners.InputType;
+import me.mrCookieSlime.QuestWorld.listeners.ChatInputCallback;
 import me.mrCookieSlime.QuestWorld.utils.ItemBuilder;
 import me.mrCookieSlime.QuestWorld.utils.Text;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.SkullType;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class QuestBook {
 	
@@ -1072,7 +1066,7 @@ public class QuestBook {
 					
 					@Override
 					public boolean onClick(Player p, int slot, ItemStack item, ClickAction action) {
-						quest.addMission(new QuestMission(quest, String.valueOf(slot - 36), MissionType.valueOf("SUBMIT"), EntityType.PLAYER, "", new ItemStack(Material.STONE), p.getLocation().getBlock().getLocation(), 1, null, 0, false, 0, false, "Hey there! Do this Quest."));
+						quest.addMission(new QuestMission(quest, String.valueOf(slot - 36), MissionType.valueOf("SUBMIT"), EntityType.PLAYER, "", new ItemStack(Material.STONE), p.getLocation().getBlock().getLocation(), 1, null, 0, false, 0, false, "Hey there! Do this Quest.", null));
 						openQuestEditor(p, quest);
 						return false;
 					}
@@ -1489,6 +1483,25 @@ public class QuestBook {
 				}
 			});
 			break;
+		}
+
+		case COMMAND: {
+			menu.addItem(10, new CustomItem(new MaterialData(Material.NAME_TAG), "§dCommand", mission.getCommand() == null ? "" : mission.getCommand(), "§rLeft Click to set"));
+			menu.addMenuClickHandler(10, new MenuClickHandler() {
+				@Override
+				public boolean onClick(Player p, int slot, ItemStack item, ClickAction action) {
+					p.closeInventory();
+					p.sendMessage("§7Enter the command in chat");
+					QuestWorld.getInstance().addChatCallback(p, new ChatInputCallback() {
+						@Override
+						public void run(String command) {
+							mission.setCommand(command);
+							openQuestMissionEditor(p, mission);
+						}
+					});
+					return false;
+				}
+			});
 		}
 		
 		default:

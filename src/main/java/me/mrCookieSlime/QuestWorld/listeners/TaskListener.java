@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerLevelChangeEvent;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -30,6 +31,16 @@ public class TaskListener implements Listener {
 
 	public TaskListener(QuestWorld plugin) {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+	}
+
+	@EventHandler
+	public void onCommand(final PlayerCommandPreprocessEvent e) {
+		QuestChecker.check(e.getPlayer(), e, "COMMAND", new QuestListener() {
+			@Override
+			public void onProgressCheck(Player p, QuestManager manager, QuestMission task, Object event) {
+				if (e.getMessage().startsWith(task.getCommand())) manager.addProgress(task, 1);
+			}
+		});
 	}
 
 	@EventHandler

@@ -9,7 +9,7 @@ import me.mrCookieSlime.QuestWorld.quests.QuestMission;
 
 public class DetectMission extends MissionType {
 	public DetectMission() {
-		super("DETECT", false, false, false, SubmissionType.ITEM, "Own %s", new MaterialData(Material.COMMAND));
+		super("DETECT", false, false, false, SubmissionType.ITEM, "Own %s", new MaterialData(Material.COMMAND_REPEATING));
 	}
 	
 	@Override
