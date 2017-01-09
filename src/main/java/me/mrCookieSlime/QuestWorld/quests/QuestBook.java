@@ -491,7 +491,7 @@ public class QuestBook {
 							int amount = 0;
 							for (int i = 0; i < 36; i++) {
 								ItemStack current = p.getInventory().getItem(i);
-								if (QuestWorld.getInstance().isItemSimiliar(current, mission.getItem())) amount = amount + current.getAmount();
+								if (QuestWorld.getInstance().isItemSimiliar(mission.getItem(), current)) amount = amount + current.getAmount();
 							}
 							if (amount >= mission.getAmount()) manager.setProgress(mission, mission.getAmount());
 							openQuest(p, quest, categoryBack, back);
