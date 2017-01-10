@@ -14,6 +14,7 @@ import java.util.UUID;
 import me.mrCookieSlime.CSCoreLibPlugin.PluginUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Localization;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Particles.MC_1_8.ParticleEffect;
 import me.mrCookieSlime.CSCoreLibSetup.CSCoreLibLoader;
 import me.mrCookieSlime.QuestWorld.commands.EditorCommand;
@@ -457,8 +458,12 @@ public class QuestWorld extends JavaPlugin implements Listener {
 	public boolean isItemSimiliar(ItemStack item, ItemStack SFitem) {
 		if(item == null || SFitem == null)
 			return item == SFitem;
-		
-		return item.isSimilar(SFitem);
+
+		if (item instanceof CustomItem) {
+			return item.isSimilar(SFitem);
+		} else {
+			return SFitem.isSimilar(item);
+		}
 	}
 
 	public Config getCfg() {
