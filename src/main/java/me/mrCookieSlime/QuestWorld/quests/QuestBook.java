@@ -226,7 +226,7 @@ public class QuestBook {
 		ItemBuilder wool = new ItemBuilder(Material.WOOL);
 		
 		if (party == null) {
-			menu.addItem(9, wool.color(DyeColor.GREEN).display("&a&lCriar nova Party").lore("", "&a&lCrie um TIME para você!", "&3Ai você poderá convidar amigos", "&3e dividir o progresso das quests").getNew());
+			menu.addItem(9, wool.color(DyeColor.GREEN).display("&a&l۩ Criar Party ۩").lore("", "&a&lCrie um TIME para você!", "", "&3Com um time criado você pode", "&3convidar seus amigos para jogar", "&3e assim progredir junto nas quests :D").getNew());
 			menu.addMenuClickHandler(9, new MenuClickHandler() {
 				
 				@Override
@@ -727,7 +727,7 @@ public class QuestBook {
 			}
 		});
 		
-		menu.addItem(0, new CustomItem(new MaterialData(Material.MAP), "&c< Back"));
+		menu.addItem(0, new CustomItem(new MaterialData(Material.MAP), "&c&l<&c<&l< Voltar"));
 		menu.addMenuClickHandler(0, new MenuClickHandler() {
 			
 			@Override
@@ -739,7 +739,7 @@ public class QuestBook {
 		
 		ItemStack item = category.getItem();
 		ItemMeta im = item.getItemMeta();
-		im.setLore(Arrays.asList("", "§e> Clique para mudar o item para", "§eo item que você esta segurando"));
+		im.setLore(Arrays.asList("", "§e> Clique para mudar o Display-Item para", "§eo item que você esta segurando"));
 		item.setItemMeta(im);
 		
 		menu.addItem(9, item);
@@ -804,7 +804,7 @@ public class QuestBook {
 			}
 		});
 		
-		menu.addItem(14, new CustomItem(new MaterialData(Material.GRASS), "§7World Blacklist", "", "§e> Click to configure in which Worlds", "&ethis Category is enabled"));
+		menu.addItem(14, new CustomItem(new MaterialData(Material.GRASS), "§7World Blacklist", "", "§e> Clique para configurar em quais mundos", "&eessa categoria esta ativada!"));
 		menu.addMenuClickHandler(14, new MenuClickHandler() {
 			
 			@Override
@@ -832,7 +832,7 @@ public class QuestBook {
 
 	@SuppressWarnings("deprecation")
 	public static void openQuestEditor(Player p, final Quest quest) {
-		final ChestMenu menu = new ChestMenu("§3Quest Editor");
+		final ChestMenu menu = new ChestMenu("§3§lFinalCraft Quest Editor");
 		menu.addMenuOpeningHandler(new MenuOpeningHandler() {
 			
 			@Override
@@ -841,7 +841,7 @@ public class QuestBook {
 			}
 		});
 		
-		menu.addItem(0, new CustomItem(new MaterialData(Material.MAP), "&c< Back"));
+		menu.addItem(0, new CustomItem(new MaterialData(Material.MAP), "&c&l<&c<&l< Voltar"));
 		menu.addMenuClickHandler(0, new MenuClickHandler() {
 			
 			@Override
@@ -853,7 +853,7 @@ public class QuestBook {
 		
 		ItemStack item = quest.getItem();
 		ItemMeta im = item.getItemMeta();
-		im.setLore(Arrays.asList("", "§e> Clique para mudar o item para", "§eo item que você esta segurando"));
+		im.setLore(Arrays.asList("", "§e> Clique para mudar o Display-Item para", "§eo item que você esta segurando"));
 		item.setItemMeta(im);
 		
 		menu.addItem(9, item);
@@ -1061,7 +1061,7 @@ public class QuestBook {
 		for (int i = 0; i < 9; i++) {
 			final QuestMission mission = quest.getMission(i);
 			if (mission == null) {
-				menu.addItem(45 + i, new CustomItem(new MaterialData(Material.PAPER), "&7&o> New Task"));
+				menu.addItem(45 + i, new CustomItem(new MaterialData(Material.PAPER), "&7&o> Nova Tarefa"));
 				menu.addMenuClickHandler(45 + i, new MenuClickHandler() {
 					
 					@Override
@@ -1104,7 +1104,7 @@ public class QuestBook {
 			}
 		});
 		
-		menu.addItem(0, new CustomItem(new MaterialData(Material.MAP), "&c< Back"));
+		menu.addItem(0, new CustomItem(new MaterialData(Material.MAP), "&c&l<&c<&l< Voltar"));
 		menu.addMenuClickHandler(0, new MenuClickHandler() {
 			
 			@Override
@@ -1143,7 +1143,7 @@ public class QuestBook {
 			}
 		});
 		
-		menu.addItem(0, new CustomItem(new MaterialData(Material.MAP), "&c< Back"));
+		menu.addItem(0, new CustomItem(new MaterialData(Material.MAP), "&c&l<&c<&l< Voltar"));
 		menu.addMenuClickHandler(0, new MenuClickHandler() {
 			
 			@Override
@@ -1182,7 +1182,7 @@ public class QuestBook {
 			}
 		});
 		
-		menu.addItem(0, new CustomItem(new MaterialData(Material.MAP), "&c< Back"));
+		menu.addItem(0, new CustomItem(new MaterialData(Material.MAP), "&c&l<&c<&l< Voltar"));
 		menu.addMenuClickHandler(0, new MenuClickHandler() {
 			
 			@Override
