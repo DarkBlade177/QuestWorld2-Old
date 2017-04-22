@@ -266,9 +266,9 @@ public class QuestWorld extends JavaPlugin implements Listener {
 		local.setDefault("editor.link-citizen", "&7Please right click the NPC you want to link with this Quest");
 		local.setDefault("editor.link-citizen-finished", "&aSuccessfully linked this NPC");
 		
-		local.setDefault("notifications.task-completed", "&e&l! &7You have completed a Task for the Quest &b<Quest>", "&e&l! &7Check your Quest Book for more Info");
-		local.setDefault("notifications.task-failed-timeframe", "&c&l! &7You failed to complete a Task for the Quest &b<Quest> &7within the given Timeframe.");
-		local.setDefault("notifications.task-timeframe-started", "&a&l! &7You have &b<Timeframe> &7of time to &b<Objective>");
+		local.setDefault("notifications.task-completed", "&e&l! &7Você completou a quest: &b<Quest>", "&e&l! &7Verifique o seu livro de quests para mais informações");
+		local.setDefault("notifications.task-failed-timeframe", "&c&l! &7Você falhou miseravelmente em completar a tarefa da quest &b<Quest> &7dentro do tempo estimado.");
+		local.setDefault("notifications.task-timeframe-started", "&a&l! &7Você tem &b<Timeframe> &7ode tempo para &b<Objective>");
 		
 		local.setDefault("editor.rename-location", "&7Please type in a Name for your Location", "&7Example: Awesomeville");
 		local.setDefault("editor.renamed-location", "&aSuccessfully given this Location a Name");
